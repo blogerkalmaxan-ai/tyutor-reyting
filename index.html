@@ -14,7 +14,6 @@
   body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh}
   input,select,button{font-family:inherit}
 
-  /* header */
   #header{background:var(--navy);padding:0 24px;position:sticky;top:0;z-index:20}
   #header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 0;flex-wrap:wrap;gap:10px}
   #logo-title{font-size:18px;font-weight:700;color:#fff}
@@ -29,29 +28,24 @@
   .tab-content.active{display:block;animation:fade .2s ease}
   @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 
-  .demo-banner{background:#FEF3C7;border:1px solid #FCD34D;color:#92400E;padding:10px 16px;border-radius:10px;font-size:13px;margin-bottom:20px;display:flex;gap:8px;align-items:center}
-
   h1{font-size:24px;font-weight:800;margin-bottom:4px}
   .subtitle{color:var(--muted);font-size:14px;margin-bottom:24px}
   h2{font-size:17px;font-weight:700;margin-bottom:14px;color:var(--navy)}
 
   .card{background:var(--card);border-radius:14px;border:1px solid var(--line);padding:20px 22px;margin-bottom:14px}
 
-  /* stat cards */
   .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
   .stat-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;display:flex;align-items:center;gap:16px}
   .stat-icon{font-size:32px}
   .stat-val{font-size:30px;font-weight:800;line-height:1}
   .stat-lbl{font-size:13px;color:var(--muted);margin-top:4px}
 
-  /* maqom cards */
   .maqom-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px}
   .maqom-card{border-radius:12px;padding:16px 18px;border:1px solid var(--line)}
   .maqom-range{font-size:11px;font-weight:600;display:inline-block;padding:3px 8px;border-radius:6px;margin-bottom:8px}
   .maqom-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:10px}
   .maqom-perk{font-size:12.5px;color:var(--muted);padding:3px 0;display:flex;gap:6px}
 
-  /* tyutor list */
   .tutor-row{display:flex;align-items:center;gap:14px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
   .rank{font-size:18px;font-weight:800;color:var(--muted);min-width:30px;text-align:center}
   .avatar{width:44px;height:44px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0}
@@ -61,12 +55,14 @@
   .score-num{font-size:22px;font-weight:800;color:var(--blue)}
   .badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px}
 
-  /* criteria */
   .crit-item{display:flex;align-items:center;gap:12px;padding:11px 14px;background:#F8FAFC;border-radius:10px;margin-bottom:8px}
-  .crit-icon{font-size:22px}
+  .crit-num{width:28px;height:28px;border-radius:8px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0}
   .crit-label{font-size:13px;font-weight:600;color:var(--navy)}
   .crit-desc{font-size:11px;color:#94A3B8;margin-top:2px}
   .crit-max{font-size:18px;font-weight:800;color:var(--blue);min-width:40px;text-align:right}
+
+  .state{text-align:center;padding:40px;color:var(--muted);font-size:14px}
+  .err{background:#FEF2F2;border:1px solid #FCA5A5;color:#991B1B;padding:14px 18px;border-radius:10px;font-size:13px;margin-bottom:20px}
 
   .footer{text-align:center;color:#94A3B8;font-size:12px;padding:24px}
 
@@ -81,7 +77,7 @@
 <div id="header">
   <div id="header-inner">
     <div>
-      <div id="logo-title">📊 Tyutor Reyting</div>
+      <div id="logo-title">Tyutor Reyting</div>
       <div id="logo-sub">Tyutorlik faoliyatini baholash tizimi</div>
     </div>
     <div id="nav">
@@ -94,41 +90,32 @@
 </div>
 
 <div id="main">
+  <div id="error-box"></div>
 
-  <div class="demo-banner">
-    ⚠️ <span><b>Demo rejim.</b> Hozir namuna ma'lumotlari ko'rsatilmoqda. Markaziy bazaga (Supabase) ulagandan keyin haqiqiy ma'lumotlar chiqadi.</span>
-  </div>
-
-  <!-- BOSH SAHIFA -->
   <div class="tab-content active" id="tab-dashboard">
     <h1>Bosh sahifa</h1>
     <p class="subtitle">Umumiy ko'rsatkichlar va tyutorlar reytingi</p>
-
     <div class="grid-3">
-      <div class="stat-card"><div class="stat-icon">👥</div><div><div class="stat-val" id="stat-tutors">0</div><div class="stat-lbl">Jami tyutorlar</div></div></div>
-      <div class="stat-card"><div class="stat-icon">🎓</div><div><div class="stat-val" id="stat-students">0</div><div class="stat-lbl">Jami talabalar</div></div></div>
-      <div class="stat-card"><div class="stat-icon">⭐</div><div><div class="stat-val" id="stat-avg">0</div><div class="stat-lbl">O'rtacha ball</div></div></div>
+      <div class="stat-card"><div class="stat-icon">👥</div><div><div class="stat-val" id="stat-tutors">—</div><div class="stat-lbl">Jami tyutorlar</div></div></div>
+      <div class="stat-card"><div class="stat-icon">🎓</div><div><div class="stat-val" id="stat-students">—</div><div class="stat-lbl">Jami talabalar</div></div></div>
+      <div class="stat-card"><div class="stat-icon">⭐</div><div><div class="stat-val" id="stat-avg">—</div><div class="stat-lbl">O'rtacha ball</div></div></div>
     </div>
-
     <h2>Eng yaxshi tyutorlar</h2>
-    <div id="dash-list"></div>
+    <div id="dash-list"><div class="state">Yuklanmoqda…</div></div>
   </div>
 
-  <!-- REYTING -->
   <div class="tab-content" id="tab-rating">
     <h1>Reyting</h1>
     <p class="subtitle">Barcha tyutorlar ball bo'yicha tartiblangan</p>
-    <div id="rating-list"></div>
+    <div id="rating-list"><div class="state">Yuklanmoqda…</div></div>
   </div>
 
-  <!-- MEZONLAR -->
   <div class="tab-content" id="tab-criteria">
     <h1>Baholash mezonlari</h1>
-    <p class="subtitle">12 ta mezon — jami 100 ball</p>
-    <div id="criteria-list"></div>
+    <p class="subtitle">Mezonlar va maksimal ballar</p>
+    <div id="criteria-list"><div class="state">Yuklanmoqda…</div></div>
   </div>
 
-  <!-- MAQOMLAR -->
   <div class="tab-content" id="tab-maqom">
     <h1>Maqom darajalari</h1>
     <p class="subtitle">Ball miqdoriga qarab tyutor maqomi va imtiyozlari</p>
@@ -157,7 +144,7 @@
       </div>
     </div>
     <div class="card">
-      <h2>🔗 Kasbiy o'sish zanjiri</h2>
+      <h2>Kasbiy o'sish zanjiri</h2>
       <p style="color:var(--muted);font-size:13px;line-height:1.6">
         Stajyor tyutor → Tyutor → Katta tyutor → Tyutorlik faoliyati koordinatori.
         Har bir maqom kamida bir semestr davomida saqlanadi va navbatdagi baholash
@@ -166,70 +153,110 @@
     </div>
   </div>
 
-  <div class="footer">Tyutor Reyting tizimi · Demo versiya</div>
+  <div class="footer">Tyutor Reyting tizimi</div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ============================================================
-//  DEMO MA'LUMOTLAR
-//  Keyin bu qism Supabase bazasidan o'qiydigan kodga almashtiriladi
+//  SUPABASE ULANISH
 // ============================================================
+const SUPABASE_URL = "https://bxqxoqfasutvnahleyen.supabase.co";
+const SUPABASE_KEY = "sb_publishable_261YxeQjx0bP4u44JgQR_Q_9b5_5DpZ";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const MEZONLAR = [
-  {id:"individual",   label:"Qonunchilik va odob-axloq kodeksidan xabardorlik", desc:"Qonunchilik hujjatlari, odob-axloq kodeksi, ichki tartib-qoidalar", icon:"👤", max:15},
-  {id:"docs",         label:"Hujjatlar va hisobotlar sifati", desc:"Elektron platformalar, o'z vaqtida topshirish, Hemis.uz", icon:"📋", max:8},
-  {id:"events",       label:"Ma'naviy-ma'rifiy tadbirlar", desc:"Tadbirlar soni, talabalar qamrovi, sifat", icon:"🎓", max:8},
-  {id:"satisfaction", label:"Talabalar ijtimoiy faolligi", desc:"Ijtimoiy faollik, jamoaviy tadbirlarda ishtirok", icon:"⭐", max:8},
-  {id:"attendance",   label:"Illatlarga qarshi targ'ibot", desc:"Korrupsiya, giyohvandlik, odam savdosiga qarshi targ'ibot", icon:"📊", max:8},
-  {id:"science",      label:"Talabalar turar joyi ma'lumotlari", desc:"Yashash joyi haqida ma'lumotlar shakllantirilganligi", icon:"🏠", max:8},
-  {id:"parents",      label:"Ota-onalar bilan aloqa", desc:"Yig'ilishlar, muammoli talabalar bilan ishlash", icon:"👨‍👩‍👧", max:8},
-  {id:"community",    label:"Mahalla va jamoatchilik bilan hamkorlik", desc:"Profilaktika inspektori, mahalla bilan hamkorlik", icon:"🤝", max:8},
-  {id:"social",       label:"Ehtiyojmand talabalar bilan ishlash", desc:"Ijtimoiy himoyaga muhtoj talabalar holati", icon:"🛡️", max:8},
-  {id:"circle",       label:"To'garaklar va Axborot resurs markazi", desc:"To'garaklarga jalb qilish, ARM xabardorligi", icon:"📌", max:8},
-  {id:"culture",      label:"Madaniy tadbirlar va tashrif", desc:"Teatr, muzey va boshqa maskanlarga tashriflar", icon:"🎭", max:5},
-  {id:"innovation",   label:"Innovatsion va ilmiy faoliyat", desc:"Loyihalar, maqolalar, startaplar, patent, grant", icon:"💡", max:8},
-];
-
-const TYUTORLAR = [
-  {id:1, ism:"Muzafarova Barno Abdusalomovna", fakultet:"Maktabgacha va boshlang'ich ta'lim", talaba:147, ball:91},
-  {id:2, ism:"Qurbonova Zebo Tojimuhammad qizi", fakultet:"Maktabgacha va boshlang'ich ta'lim", talaba:139, ball:78},
-  {id:3, ism:"Sodiqjonova Munojat Axror qizi", fakultet:"Maktabgacha va boshlang'ich ta'lim", talaba:151, ball:64},
-  {id:4, ism:"Rahimov Akmal Bahodir o'g'li", fakultet:"Aniq fanlar", talaba:128, ball:55},
-  {id:5, ism:"Yusupova Dilnoza Farrux qizi", fakultet:"Filologiya", talaba:134, ball:87},
-];
-
-// ---- Yordamchi funksiyalar ----
 function maqom(ball){
   if(ball >= 85) return {nomi:"Katta tyutor", rang:"#059669", bg:"#ECFDF5"};
   if(ball >= 60) return {nomi:"Tyutor", rang:"#2563EB", bg:"#EFF6FF"};
   return {nomi:"Stajyor tyutor", rang:"#D97706", bg:"#FFFBEB"};
 }
-function bosh(ism){ return ism.split(" ").slice(0,2).map(s=>s[0]).join("").toUpperCase(); }
+function bosh(ism){
+  if(!ism) return "?";
+  return ism.split(" ").slice(0,2).map(s=>s[0]).join("").toUpperCase();
+}
+function xato(msg){
+  document.getElementById("error-box").innerHTML =
+    `<div class="err"><b>Xatolik:</b> ${msg}</div>`;
+}
 
-// ---- Sahifalarni chizish ----
+let TYUTORLAR = [];
+let MEZONLAR = [];
+let FAKULTETLAR = {};
+
+async function malumotOl(){
+  try{
+    const {data:fak} = await db.from("fakultetlar").select("*");
+    (fak||[]).forEach(f=>{ FAKULTETLAR[f.id] = f.nomi; });
+
+    const {data:mez} = await db.from("mezonlar").select("*").order("tartib");
+    MEZONLAR = mez || [];
+
+    const {data:tut, error:tutErr} = await db.from("tyutorlar").select("*");
+    if(tutErr) throw tutErr;
+
+    const {data:bal} = await db.from("baholar").select("tyutor_id, ball");
+    const ballMap = {};
+    (bal||[]).forEach(b=>{
+      ballMap[b.tyutor_id] = (ballMap[b.tyutor_id]||0) + Number(b.ball||0);
+    });
+
+    TYUTORLAR = (tut||[]).map(t=>({
+      id: t.id,
+      ism: t.ism,
+      fakultet: FAKULTETLAR[t.fakultet_id] || "—",
+      talaba: t.jami_talaba || 0,
+      ball: ballMap[t.id] || 0
+    }));
+
+    chizHammasi();
+  }catch(e){
+    xato(e.message || "Bazaga ulanishda muammo.");
+    document.getElementById("dash-list").innerHTML = "";
+    document.getElementById("rating-list").innerHTML = "";
+  }
+}
+
+function chizHammasi(){
+  chizDashboard();
+  chizRating();
+  chizCriteria();
+}
+
 function chizDashboard(){
   const list = [...TYUTORLAR].sort((a,b)=>b.ball-a.ball);
   document.getElementById("stat-tutors").textContent = TYUTORLAR.length;
   document.getElementById("stat-students").textContent = TYUTORLAR.reduce((s,t)=>s+t.talaba,0);
-  const ortacha = Math.round(TYUTORLAR.reduce((s,t)=>s+t.ball,0)/TYUTORLAR.length);
+  const ortacha = TYUTORLAR.length ? Math.round(TYUTORLAR.reduce((s,t)=>s+t.ball,0)/TYUTORLAR.length) : 0;
   document.getElementById("stat-avg").textContent = ortacha;
-  document.getElementById("dash-list").innerHTML = list.slice(0,5).map((t,i)=>tutorRow(t,i+1)).join("");
+  const el = document.getElementById("dash-list");
+  el.innerHTML = list.length
+    ? list.slice(0,5).map((t,i)=>tutorRow(t,i+1)).join("")
+    : `<div class="state">Hali tyutor qo'shilmagan.</div>`;
 }
+
 function chizRating(){
   const list = [...TYUTORLAR].sort((a,b)=>b.ball-a.ball);
-  document.getElementById("rating-list").innerHTML = list.map((t,i)=>tutorRow(t,i+1)).join("");
+  const el = document.getElementById("rating-list");
+  el.innerHTML = list.length
+    ? list.map((t,i)=>tutorRow(t,i+1)).join("")
+    : `<div class="state">Hali tyutor qo'shilmagan.</div>`;
 }
+
 function chizCriteria(){
-  document.getElementById("criteria-list").innerHTML = MEZONLAR.map(m=>`
-    <div class="crit-item">
-      <span class="crit-icon">${m.icon}</span>
-      <div style="flex:1">
-        <div class="crit-label">${m.label}</div>
-        <div class="crit-desc">${m.desc}</div>
-      </div>
-      <div class="crit-max">${m.max}</div>
-    </div>`).join("");
+  const el = document.getElementById("criteria-list");
+  el.innerHTML = MEZONLAR.length
+    ? MEZONLAR.map((m,i)=>`
+      <div class="crit-item">
+        <div class="crit-num">${i+1}</div>
+        <div style="flex:1">
+          <div class="crit-label">${m.label}</div>
+          <div class="crit-desc">${m.tavsif||""}</div>
+        </div>
+        <div class="crit-max">${m.max_ball}</div>
+      </div>`).join("")
+    : `<div class="state">Mezonlar topilmadi.</div>`;
 }
+
 function tutorRow(t, rank){
   const m = maqom(t.ball);
   return `
@@ -247,7 +274,6 @@ function tutorRow(t, rank){
     </div>`;
 }
 
-// ---- Tab almashtirish ----
 document.querySelectorAll(".nav-btn").forEach(btn=>{
   btn.addEventListener("click",()=>{
     document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
@@ -257,10 +283,7 @@ document.querySelectorAll(".nav-btn").forEach(btn=>{
   });
 });
 
-// ---- Ishga tushirish ----
-chizDashboard();
-chizRating();
-chizCriteria();
+malumotOl();
 </script>
 </body>
 </html>
